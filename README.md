@@ -1,1 +1,1 @@
-# secure-deal
+# Secure Deal TON
