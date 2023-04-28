@@ -1,3 +1,4 @@
+name: Deploy
 on:
   workflow_dispatch:
   push:
@@ -37,7 +38,7 @@ jobs:
       - name: 🌈 Upload artifact for Pages
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./dist
+          path: ./dist/client
 
   deploy:
     needs: build
