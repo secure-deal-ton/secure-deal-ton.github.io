@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTelegramWebApp } from './useTelegramWebApp';
+import '../../../styles.scss';
+import './styles.scss';
 
 type Props = {};
 

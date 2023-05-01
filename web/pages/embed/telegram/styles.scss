@@ -1,0 +1,11 @@
+:root {
+    --bs-body-color: var(--tg-theme-text-color);
+    --bs-link-color: var(--tg-theme-link-color);
+    --bs-body-bg: var(--tg-theme-secondary-bg-color);
+    --bs-primary: var(--tg-theme-button-color);
+
+    // Not used variables:
+    // var(--tg-theme-hint-color);
+    // var(--tg-theme-bg-color);
+    // var(--tg-theme-button-text-color);
+}
