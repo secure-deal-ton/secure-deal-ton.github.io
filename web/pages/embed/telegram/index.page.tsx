@@ -26,6 +26,11 @@ export function Page(_props: Props) {
             <p>TON Address: {userFriendlyAddress}</p>
 
             <TonConnectButton />
+
+            <p>Telegram Init Data:</p>
+            <pre>
+                <code>{JSON.stringify(webApp.initDataUnsafe)}</code>
+            </pre>
         </>
     );
 }
