@@ -9,3 +9,8 @@
     // var(--tg-theme-bg-color);
     // var(--tg-theme-button-text-color);
 }
+
+body {
+    background: var(--tg-theme-secondary-bg-color);
+    color: var(--tg-theme-text-color);
+}
