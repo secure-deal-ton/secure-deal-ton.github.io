@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { Helmet } from 'react-helmet';
 import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server';
 import { App } from './App';
 import type { PageContextServer } from './types';
@@ -14,22 +15,16 @@ export async function render(pageContext: PageContextServer) {
             <Page {...pageProps} />
         </App>
     );
-
-    // See https://vite-plugin-ssr.com/head
-    const { documentProps } = pageContext.exports;
-    const title = (documentProps && documentProps.title) || 'Secure Deal TON';
-    const desc = (documentProps && documentProps.description) || 'Secure Deal TON';
+    const helmet = Helmet.renderStatic();
 
     const documentHtml = escapeInject`<!DOCTYPE html>
-    <html lang="en">
+    <html ${dangerouslySkipEscape(helmet.htmlAttributes.toString())}>
       <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="${desc}" />
-        <title>${title}</title>
+        ${dangerouslySkipEscape(helmet.title.toString())}
+        ${dangerouslySkipEscape(helmet.meta.toString())}
+        ${dangerouslySkipEscape(helmet.link.toString())}
       </head>
-      <body>
+      <body ${dangerouslySkipEscape(helmet.bodyAttributes.toString())}>
         <div id="app">${dangerouslySkipEscape(pageHtml)}</div>
       </body>
     </html>`;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { TonConnectButton, useTonAddress } from '@tonconnect/ui-react';
 import { useTelegramWebApp } from './useTelegramWebApp';
 import '../../../styles.scss';
@@ -9,12 +10,14 @@ type Props = {};
 export function Page(_props: Props) {
     const webApp = useTelegramWebApp();
     const userFriendlyAddress = useTonAddress();
+    const user = webApp?.initDataUnsafe?.user;
 
-    if (!webApp) return null;
-
-    const { user } = webApp.initDataUnsafe;
     return (
         <>
+            <Helmet>
+                <body className="telegram" />
+            </Helmet>
+
             <h1>Hello Telegram!</h1>
 
             {user ? (
@@ -29,7 +32,7 @@ export function Page(_props: Props) {
 
             <p>Telegram Init Data:</p>
             <pre>
-                <code>{JSON.stringify(webApp.initDataUnsafe)}</code>
+                <code>{JSON.stringify(webApp?.initDataUnsafe)}</code>
             </pre>
         </>
     );

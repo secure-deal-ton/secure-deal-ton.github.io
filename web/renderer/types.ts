@@ -10,12 +10,7 @@ export type PageContextCustom = {
     Page: Page;
     pageProps?: PageProps;
     urlPathname: string;
-    exports: {
-        documentProps?: {
-            title?: string;
-            description?: string;
-        };
-    };
+    exports: {};
 };
 
 export type PageContextServer = PageContextBuiltIn<Page> & PageContextCustom;
