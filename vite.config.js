@@ -7,6 +7,7 @@ export default defineConfig({
     root: 'web',
     plugins: [react(), ssr({ prerender: true })],
     build: { outDir: path.resolve(__dirname, 'dist'), emptyOutDir: true },
+    ssr: { noExternal: ['@tonconnect/ui', '@tonconnect/ui-react'] },
     resolve: {
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
