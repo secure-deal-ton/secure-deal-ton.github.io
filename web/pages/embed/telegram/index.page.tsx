@@ -23,7 +23,7 @@ function getMessages(action: string): SendTransactionRequest['messages'] {
 function getDeployMessages(): SendTransactionRequest['messages'] {
     return [
         {
-            address: '0:cf65e89184b011084c2abae095868795decab7d948d5f37eb39a93ac91a5dfcb',
+            address: '0:CF65E89184B011084C2ABAE095868795DECAB7D948D5F37EB39A93AC91A5DFCB',
             amount: '20000000',
             // stateInit: 'base64bocblahblahblah==',
             // payload: 'base64bocblahblahblah==',
