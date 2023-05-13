@@ -10,6 +10,16 @@ const ACTIONS: Record<string, () => SendTransactionRequest['messages']> = {
     deploy: getDeployMessages,
 };
 
+function getAction(): string | null {
+    if (!location) return null;
+    const searchParams = new URLSearchParams(location.search);
+    return searchParams.get('act');
+}
+
+function getMessages(action: string): SendTransactionRequest['messages'] {
+    return ACTIONS[action]?.() ?? [];
+}
+
 function getDeployMessages(): SendTransactionRequest['messages'] {
     return [
         {
@@ -21,29 +31,29 @@ function getDeployMessages(): SendTransactionRequest['messages'] {
     ];
 }
 
+function Content() {
+    const wallet = useTonWallet();
+    if (!wallet) return <ConnectWallet />;
+
+    const action = getAction();
+    if (!action) return <p>Action is not defined</p>;
+
+    const messages = getMessages(action);
+    if (!messages.length) return <p>Unknown action: {action}</p>;
+
+    return <ConfirmTransaction messages={messages} />;
+}
+
 type Props = {};
 
 export function Page(_props: Props) {
-    const wallet = useTonWallet();
-    const searchParams = new URLSearchParams(document ? document.location.search : '');
-    const action = searchParams.get('act');
-    const getMessages = action ? ACTIONS[action] : undefined;
-
     return (
         <>
             <Helmet>
                 <body className="telegram" />
             </Helmet>
 
-            {getMessages ? (
-                wallet ? (
-                    <ConfirmTransaction messages={getMessages()} />
-                ) : (
-                    <ConnectWallet />
-                )
-            ) : (
-                <p>Unknown action: {action}</p>
-            )}
+            <Content />
         </>
     );
 }
