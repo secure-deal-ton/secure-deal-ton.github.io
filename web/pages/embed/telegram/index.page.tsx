@@ -26,7 +26,7 @@ function getDeployMessages(): SendTransactionRequest['messages'] {
             address: '0:CF65E89184B011084C2ABAE095868795DECAB7D948D5F37EB39A93AC91A5DFCB',
             amount: '20000000',
             // stateInit: 'base64bocblahblahblah==',
-            // payload: 'base64bocblahblahblah==',
+            payload: 'base64bocblahblahblah==',
         },
     ];
 }
