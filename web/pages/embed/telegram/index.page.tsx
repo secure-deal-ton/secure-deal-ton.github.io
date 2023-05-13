@@ -25,7 +25,7 @@ type Props = {};
 
 export function Page(_props: Props) {
     const wallet = useTonWallet();
-    const searchParams = new URLSearchParams(document.location.search);
+    const searchParams = new URLSearchParams(document ? document.location.search : '');
     const action = searchParams.get('act');
     const getMessages = action ? ACTIONS[action] : undefined;
 
