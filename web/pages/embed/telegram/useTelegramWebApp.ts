@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { EventEmitter, UnsubscribeFn } from '../../../utils/EventEmitter';
 
 /**
  * Available app events.
@@ -528,11 +529,25 @@ type HapticFeedbackImpactStyle = 'light' | 'medium' | 'heavy' | 'rigid' | 'soft'
  */
 type HapticFeedbackNotificationType = 'error' | 'success' | 'warning';
 
-export function useTelegramWebApp(): WebApp | null {
-    const [webApp, setWebApp] = useState<WebApp | null>(null);
+class WebAppScriptLoader {
+    private scriptElement: HTMLScriptElement | null = null;
 
-    useEffect(() => {
-        if (!document) return;
+    private lastLoadedWebApp: WebApp | null = null;
+
+    private emitter = new EventEmitter<{ update: [WebApp | null] }>();
+
+    public subscribe(updater: (value: WebApp | null) => void): UnsubscribeFn {
+        updater(this.lastLoadedWebApp);
+        const removeSubscribe = this.emitter.on('update', updater);
+        const unsubscribe = () => {
+            removeSubscribe();
+
+            if (!document || !this.scriptElement) return;
+            document.body.removeChild(this.scriptElement);
+        };
+
+        if (!document) return unsubscribe;
+        if (this.emitter.size('update') > 1) return unsubscribe;
 
         const script = document.createElement('script');
         script.defer = true;
@@ -542,15 +557,22 @@ export function useTelegramWebApp(): WebApp | null {
             // @ts-expect-error unknown properties in global context
             const webApp = window?.Telegram?.WebApp as WebApp | undefined;
 
-            setWebApp(webApp ?? null);
+            this.lastLoadedWebApp = webApp ?? null;
+            this.emitter.emit('update', this.lastLoadedWebApp);
         };
 
         document.body.appendChild(script);
+        this.scriptElement = script;
 
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
+        return unsubscribe;
+    }
+}
+
+const loader = new WebAppScriptLoader();
+
+export function useTelegramWebApp(): WebApp | null {
+    const [webApp, setWebApp] = useState<WebApp | null>(null);
+    useEffect(() => loader.subscribe(setWebApp), []);
 
     return webApp;
 }
