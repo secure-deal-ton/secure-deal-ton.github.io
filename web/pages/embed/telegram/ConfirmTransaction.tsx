@@ -7,7 +7,7 @@ type Props = {
     isTestnet?: boolean;
 };
 
-export function ConfirmTransaction(props: Props) {
+export function ConfirmTransaction({ messages, isTestnet }: Props) {
     const webApp = useTelegramWebApp();
     const userFriendlyAddress = useTonAddress();
     const [tonConnectUI] = useTonConnectUI();
@@ -16,10 +16,10 @@ export function ConfirmTransaction(props: Props) {
     const handleConfirm = useCallback(() => {
         tonConnectUI.sendTransaction({
             validUntil: Date.now() + 1000000,
-            network: props.isTestnet ? CHAIN.TESTNET : CHAIN.MAINNET,
-            messages: [],
+            network: isTestnet ? CHAIN.TESTNET : CHAIN.MAINNET,
+            messages,
         });
-    }, [tonConnectUI]);
+    }, [tonConnectUI, messages, isTestnet]);
     const handleDisconnect = useCallback(() => tonConnectUI.disconnect(), [tonConnectUI]);
 
     return (
