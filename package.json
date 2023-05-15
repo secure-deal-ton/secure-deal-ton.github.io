@@ -16,6 +16,7 @@
         "prettier": "^2.8.8",
         "sass": "^1.62.1",
         "typescript": "^5.0.4",
+        "typescript-plugin-css-modules": "^5.0.1",
         "vite": "^4.3.3",
         "vite-plugin-ssr": "^0.4.120"
     },

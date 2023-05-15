@@ -15,7 +15,8 @@ export function App(props: Props) {
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="description" content="Secure Deal TON" />
-                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+                <link rel="icon" type="image/png" href="/logo_180.png" />
+                <link rel="icon" type="image/svg+xml" href="/logotype.svg" />
             </Helmet>
             <TonConnectUIProvider manifestUrl="https://secure-deal-ton.github.io/tonconnect-manifest.json">
                 <PageContextProvider value={props.pageContext}>{props.children}</PageContextProvider>
