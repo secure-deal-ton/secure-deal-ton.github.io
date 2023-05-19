@@ -1,4 +1,6 @@
 import React from 'react';
+import { toUserFriendlyAddress } from '@tonconnect/sdk';
+import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 import styles from './Header.module.scss';
 
 const MENU = [
@@ -7,9 +9,17 @@ const MENU = [
     { title: 'Community', link: '#' },
 ];
 
+function getShortAddress(hex: string): string {
+    const address = toUserFriendlyAddress(hex);
+    return `${address.slice(0, 4)}..${address.slice(-4)}`;
+}
+
 type Props = {};
 
 export function Header(props: Props) {
+    const wallet = useTonWallet();
+    const [tonConnectUI] = useTonConnectUI();
+
     return (
         <nav className={`navbar sticky-top navbar-light ${styles.navbar}`}>
             <div className="container justify-content-between">
@@ -30,7 +40,17 @@ export function Header(props: Props) {
                     ))}
                 </ul>
 
-                <div className="col-md-2 text-end"></div>
+                <div className="col-md-2 text-end">
+                    {wallet ? (
+                        <button className="btn btn-outline-secondary" onClick={() => tonConnectUI.disconnect()}>
+                            Disconnect {getShortAddress(wallet.account.address)}
+                        </button>
+                    ) : (
+                        <button className="btn btn-outline-secondary" onClick={() => tonConnectUI.connectWallet()}>
+                            Connect wallet
+                        </button>
+                    )}
+                </div>
             </div>
         </nav>
     );
