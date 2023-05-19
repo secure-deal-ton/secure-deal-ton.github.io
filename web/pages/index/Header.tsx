@@ -23,24 +23,14 @@ export function Header(props: Props) {
     return (
         <nav className={`navbar sticky-top navbar-light ${styles.navbar}`}>
             <div className="container justify-content-between">
-                <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-start">
+                <div className="col-6 col-lg-3 d-flex justify-content-center justify-content-lg-start">
                     <a className="navbar-brand d-flex align-items-center" href="/">
                         <img className={styles.logotype} src="/logotype.svg" />
                         Secure Deal TON
                     </a>
                 </div>
 
-                <ul className="col-12 col-md-auto nav justify-content-center">
-                    {MENU.map((item) => (
-                        <li>
-                            <a className={`nav-link link-dark ${styles.navLink}`} href={item.link}>
-                                {item.title}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-
-                <div className="col-md-2 text-end">
+                <div className="col-6 col-lg-3 order-lg-last text-end justify-content-end">
                     {wallet ? (
                         <button className="btn btn-outline-secondary" onClick={() => tonConnectUI.disconnect()}>
                             Disconnect {getShortAddress(wallet.account.address)}
@@ -51,6 +41,16 @@ export function Header(props: Props) {
                         </button>
                     )}
                 </div>
+
+                <ul className="col-12 col-lg-auto nav justify-content-center">
+                    {MENU.map((item) => (
+                        <li>
+                            <a className={`nav-link link-dark ${styles.navLink}`} href={item.link}>
+                                {item.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </nav>
     );
