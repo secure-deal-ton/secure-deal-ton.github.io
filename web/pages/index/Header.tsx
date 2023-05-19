@@ -1,6 +1,12 @@
 import React from 'react';
 import styles from './Header.module.scss';
 
+const MENU = [
+    { title: 'Use', link: '#' },
+    { title: 'Pricing', link: '#' },
+    { title: 'Community', link: '#' },
+];
+
 type Props = {};
 
 export function Header(props: Props) {
@@ -15,21 +21,13 @@ export function Header(props: Props) {
                 </div>
 
                 <ul className="col-12 col-md-auto nav justify-content-center">
-                    <li>
-                        <a className="nav-link link-dark" href="#">
-                            Use
-                        </a>
-                    </li>
-                    <li>
-                        <a className="nav-link link-dark" href="#">
-                            Pricing
-                        </a>
-                    </li>
-                    <li>
-                        <a className="nav-link link-dark" href="#">
-                            Community
-                        </a>
-                    </li>
+                    {MENU.map((item) => (
+                        <li>
+                            <a className={`nav-link link-dark ${styles.navLink}`} href={item.link}>
+                                {item.title}
+                            </a>
+                        </li>
+                    ))}
                 </ul>
 
                 <div className="col-md-2 text-end"></div>

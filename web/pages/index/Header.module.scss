@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap-utilities';
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.85);
     backdrop-filter: saturate(180%) blur(20px);
@@ -10,4 +12,13 @@
     border-radius: 32px;
     margin-right: 8px;
     vertical-align: middle;
+}
+
+.navLink {
+    border-radius: $border-radius;
+
+    &:hover,
+    &:focus {
+        background-color: rgba($gray-600, 0.075);
+    }
 }
