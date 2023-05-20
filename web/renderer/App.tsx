@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import type { PageContext } from './types';
 import { PageContextProvider } from './usePageContext';
+import { store } from '../store';
 
 type Props = { children: React.ReactNode; pageContext: PageContext };
 

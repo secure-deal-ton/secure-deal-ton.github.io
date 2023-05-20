@@ -2,6 +2,7 @@ import React from 'react';
 import { toUserFriendlyAddress } from '@tonconnect/sdk';
 import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 import styles from './Header.module.scss';
+import { useIsAdmin } from '../../features/access/accessHooks';
 
 const MENU = [
     { title: 'Use', link: '#' },
@@ -19,6 +20,8 @@ type Props = {};
 export function Header(props: Props) {
     const wallet = useTonWallet();
     const [tonConnectUI] = useTonConnectUI();
+    const isAdmin = useIsAdmin();
+    const menu = isAdmin ? MENU.concat({ title: 'Admin', link: '#' }) : MENU;
 
     return (
         <nav className={`navbar sticky-top navbar-light ${styles.navbar}`}>
@@ -43,8 +46,8 @@ export function Header(props: Props) {
                 </div>
 
                 <ul className="col-12 col-lg-auto nav justify-content-center">
-                    {MENU.map((item) => (
-                        <li>
+                    {menu.map((item) => (
+                        <li key={item.title}>
                             <a className={`nav-link link-dark ${styles.navLink}`} href={item.link}>
                                 {item.title}
                             </a>
