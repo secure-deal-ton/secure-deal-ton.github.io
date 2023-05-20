@@ -4,7 +4,9 @@ import { useFetchDomainInfoQuery } from '../tonweb/tonwebSlice';
 const DOMAIN_CONTRACT_ADDRESS = 'EQBaUYdnu2lIKOiATS5X7qpLODOCPHG15ljkxbECYnfLFpx7';
 
 function useDomainOwner(): string | null {
-    const { data } = useFetchDomainInfoQuery(DOMAIN_CONTRACT_ADDRESS);
+    const { data } = useFetchDomainInfoQuery(DOMAIN_CONTRACT_ADDRESS, {
+        refetchOnMountOrArgChange: 600, // 10 minutes
+    });
     if (!data) return null;
     if (data.domain !== 'secure-deal') return null; // wrong address?
 

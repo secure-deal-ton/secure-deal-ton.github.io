@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { REHYDRATE } from 'redux-persist';
 import { Cell } from 'ton-core';
 
 function parseDomainContent(cell: Cell) {
@@ -39,6 +40,11 @@ const tonwebSlice = createApi({
             return searchParams.toString();
         },
     }),
+    extractRehydrationInfo(action, { reducerPath }) {
+        if (action.type === REHYDRATE) {
+            return action['payload']?.[reducerPath];
+        }
+    },
     endpoints: (builder) => ({
         fetchDomainInfo: builder.query({
             query: (address: string) => ({
