@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Provider } from 'react-redux';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import type { PageContext } from './types';
 import { PageContextProvider } from './usePageContext';
@@ -18,9 +19,11 @@ export function App(props: Props) {
                 <link rel="icon" type="image/png" href="/logo_180.png" />
                 <link rel="icon" type="image/svg+xml" href="/logotype.svg" />
             </Helmet>
-            <TonConnectUIProvider manifestUrl="https://secure-deal-ton.github.io/tonconnect-manifest.json">
-                <PageContextProvider value={props.pageContext}>{props.children}</PageContextProvider>
-            </TonConnectUIProvider>
+            <Provider store={store}>
+                <TonConnectUIProvider manifestUrl="https://secure-deal-ton.github.io/tonconnect-manifest.json">
+                    <PageContextProvider value={props.pageContext}>{props.children}</PageContextProvider>
+                </TonConnectUIProvider>
+            </Provider>
         </React.StrictMode>
     );
 }
