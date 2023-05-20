@@ -1,11 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import type { PageContext } from './types';
 import { PageContextProvider } from './usePageContext';
-import { store, persistor } from '../store';
 
 type Props = { children: React.ReactNode; pageContext: PageContext };
 
@@ -21,13 +18,9 @@ export function App(props: Props) {
                 <link rel="icon" type="image/png" href="/logo_180.png" />
                 <link rel="icon" type="image/svg+xml" href="/logotype.svg" />
             </Helmet>
-            <Provider store={store}>
-                <TonConnectUIProvider manifestUrl="https://secure-deal-ton.github.io/tonconnect-manifest.json">
-                    <PersistGate loading={null} persistor={persistor}>
-                        <PageContextProvider value={props.pageContext}>{props.children}</PageContextProvider>
-                    </PersistGate>
-                </TonConnectUIProvider>
-            </Provider>
+            <TonConnectUIProvider manifestUrl="https://secure-deal-ton.github.io/tonconnect-manifest.json">
+                <PageContextProvider value={props.pageContext}>{props.children}</PageContextProvider>
+            </TonConnectUIProvider>
         </React.StrictMode>
     );
 }

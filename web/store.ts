@@ -1,38 +1,14 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query/react';
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { tonwebMiddleware, tonwebReducer, tonwebReducerPath } from './features/tonweb/tonwebSlice';
+import { tonwebReducer, tonwebReducerPath } from './features/tonweb/tonwebSlice';
 
-const persistConfig = {
-    key: 'root',
-    version: 1,
-    storage,
-};
-
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     [tonwebReducerPath]: tonwebReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            },
-        }).concat(tonwebMiddleware),
+    reducer: rootReducer,
 });
-
-// required for refetchOnFocus/refetchOnReconnect behaviors
-setupListeners(store.dispatch);
-
-export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
-
-Object.assign(globalThis, { redux: store });

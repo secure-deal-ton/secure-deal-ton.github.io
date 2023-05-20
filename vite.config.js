@@ -16,7 +16,7 @@ export default defineConfig({
         }),
     ],
     build: { outDir: path.resolve(__dirname, 'dist'), emptyOutDir: true },
-    ssr: { noExternal: ['@tonconnect/ui', '@tonconnect/ui-react'] },
+    ssr: { noExternal: ['@tonconnect/ui', '@tonconnect/ui-react', '@reduxjs/toolkit', 'redux-persist'] },
     resolve: {
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),

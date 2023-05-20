@@ -1,6 +1,9 @@
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 import { App } from './App';
+import { store, persistor } from '../store.client';
 import type { PageContextClient } from './types';
 
 export async function render(pageContext: PageContextClient) {
@@ -10,7 +13,11 @@ export async function render(pageContext: PageContextClient) {
     hydrateRoot(
         document.getElementById('app')!,
         <App pageContext={pageContext}>
-            <Page {...pageProps} />
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <Page {...pageProps} />
+                </PersistGate>
+            </Provider>
         </App>
     );
 }
