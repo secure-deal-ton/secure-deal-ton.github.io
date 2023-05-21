@@ -10,4 +10,5 @@ export const store = createStore(rootReducer);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;
+export type RootStore = typeof store;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;

@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Helmet } from 'react-helmet';
-import { Provider } from 'react-redux';
 import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server';
 import { App } from './App';
-import type { PageContextServer } from './types';
 import { store } from '../store';
+import type { PageContextServer } from './types';
 
 export const passToClient = ['pageProps'];
 
@@ -13,10 +12,8 @@ export async function render(pageContext: PageContextServer) {
     const { Page, pageProps } = pageContext;
     if (!Page) throw new Error('My render() hook expects pageContext.Page to be defined');
     const pageHtml = ReactDOMServer.renderToString(
-        <App pageContext={pageContext}>
-            <Provider store={store}>
-                <Page {...pageProps} />
-            </Provider>
+        <App pageContext={pageContext} store={store} persistor={null}>
+            <Page {...pageProps} />
         </App>
     );
     const helmet = Helmet.renderStatic();
