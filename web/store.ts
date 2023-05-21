@@ -1,13 +1,12 @@
-import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
+import { createStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import { tonwebReducer, tonwebReducerPath } from './features/tonweb/tonwebSlice';
 
 export const rootReducer = combineReducers({
     [tonwebReducerPath]: tonwebReducer,
 });
 
-export const store = configureStore({
-    reducer: rootReducer,
-});
+// `configureStore` doesn't work with SSR
+export const store = createStore(rootReducer);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;
